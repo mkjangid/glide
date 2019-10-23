@@ -6,17 +6,15 @@ const koaCors = require("@koa/cors");
 const koaMulter = require("@koa/multer");
 const mimeTypes = require("mime-types");
 const saltedMd5 = require("salted-md5");
-
-const PORT = 3000;
-
+const serve = require('koa-static');
 const app = new Koa();
 const mainRouter = new KoaRouter();
 
+const PORT = 3000;
 const ROOT_PATH = "./project/";
 const ALLOW_EDIT_PHP = false;
 const USE_MD5 = false;
 const MD5_SALT = "";
-
 const CONFIG_PATH = "wide_config.json";
 
 function loadConfig() {
@@ -198,41 +196,48 @@ app.use(koaCors());
 app.use(koaMulter().none());
 app.use(mainRouter.routes());
 app.use(mainRouter.allowedMethods());
+app.use(serve('.')); /**serves static files **/
 app.listen(PORT, () => console.log(`Server started listening on port ${PORT}`));
 
 module.exports = app;
 
 
-var express = require('express')
-var pty = require('node-pty');
+/*******
+-----------socket.io and xterm.js-------------- 
+***/
+const app2 = require('express')();
+const server2 = require('http').createServer(app2);
+const io = require('socket.io')(server2);
+const pty = require('node-pty');
+const os = require('os');
+const shell_type = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
+const SOCKET_PORT = 80;
 
-const app2 = express();
-const expressWs = require('express-ws')(app2);
+io.on('connection', function(socket){
+    try{
+        console.log('a client connected. Spawning new shell');
 
-
-app2.use(function (req, res, next) {
-    console.log('middleware');
-    req.testing = 'testing';
-    return next();
-});
-
-// Instantiate shell and set up data handlers
-app2.ws('/shell', (ws, req) => {
-    // Spawn the shell
-    const shell = pty.spawn('/bin/bash', [], {
-        name: 'xterm-color',
-        cwd: ROOT_PATH,
-        env: process.env
-    });
-    // For all shell data send it to the websocket
-    shell.on('data', (data) => {
-        ws.send(data);
-    });
-    // For all websocket data send it to the shell
-    ws.on('message', (msg) => {
-        shell.write(msg);
-    });
+        const shell = pty.spawn(shell_type, [], {
+            name: 'xterm-color',
+            cols: 80,
+            rows: 30,
+            cwd: process.env.HOME,
+            env: process.env
+        });
+        
+        // For all shell data send it to the socket
+        shell.on('data', (data) => {
+            io.emit('data',data);
+        });
+        
+        // For all socket data send it to the shell
+        socket.on('data', (msg) => {
+            shell.write(msg);
+        });
+    }catch(e){
+        console.log("exceprtion" + e);
+    }
 });
 
 // Start the application
-app2.listen(80);
+server2.listen(SOCKET_PORT,() => console.log(`Socket server started listening on port ${SOCKET_PORT}`));
