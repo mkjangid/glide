@@ -15,7 +15,7 @@ const ROOT_PATH = "./project/";
 const ALLOW_EDIT_PHP = false;
 const USE_MD5 = false;
 const MD5_SALT = "";
-const CONFIG_PATH = "wide_config.json";
+const CONFIG_PATH = "./config/wide_config.json";
 
 function loadConfig() {
     if (!fs.existsSync(CONFIG_PATH)) process.exit(-1);
@@ -197,7 +197,7 @@ app.use(koaMulter().none());
 app.use(mainRouter.routes());
 app.use(mainRouter.allowedMethods());
 app.use(serve('.')); /**serves static files **/
-app.listen(PORT, () => console.log(`Server started listening on port ${PORT}`));
+app.listen(PORT, () => console.log(`HTTP server : port ${PORT}`));
 
 module.exports = app;
 
@@ -240,4 +240,4 @@ io.on('connection', function(socket){
 });
 
 // Start the application
-server2.listen(SOCKET_PORT,() => console.log(`Socket server started listening on port ${SOCKET_PORT}`));
+server2.listen(SOCKET_PORT,() => console.log(`Socket server : port ${SOCKET_PORT}`));

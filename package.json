@@ -9,6 +9,7 @@
     "@koa/cors": "^3.0.0",
     "@koa/multer": "^2.0.0",
     "@koa/router": "^8.0.1",
+    "browserify": "^16.5.0",
     "express": "^4.17.1",
     "koa": "^2.8.2",
     "koa-static": "^5.0.0",
@@ -19,6 +20,17 @@
     "salted-md5": "^4.0.2",
     "socket.io": "^2.3.0",
     "xterm": "^3.14.2",
+    "xterm-addon-attach": "^0.3.0",
+    "xterm-addon-fit": "^0.2.1",
     "xterm-addon-web-links": "^0.2.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "babelify": "^10.0.0"
+  },
+  "scripts": {
+        "build": "browserify ./js/terminal_code.js -t babelify --outfile ./js/bundled_terminal_code.js",
+        "run": "node server.js"
   }
 }
