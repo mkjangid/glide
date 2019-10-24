@@ -116,9 +116,9 @@ var WIDE = {
 			WIDE.bringTerminalToFront(terminal_index);
 		});
 
-		/*document.querySelector("#"+close_btn_id).addEventListener("click",function(e){
+		document.querySelector("#"+close_btn_id).addEventListener("click",function(e){
 			WIDE.closeTerminal(terminal_index);
-		});*/
+		});
 
 		let element2 = document.createElement("div");
 		element2.className = 'terminal_xterm'
@@ -148,9 +148,9 @@ var WIDE = {
 	},
 
 	closeTerminal : function(terminal_index) {
-		let socket = this.terminals [terminal_index-1] ;
+		let socket = this.terminals [terminal_index-1]["socket"] ;
 		socket.close();
-		this.terminals [terminal_index-1] = null;
+		this.terminals[terminal_index-1] = null;
 		document.getElementById('terminal'+terminal_index).remove();
 		document.getElementById('li-term'+terminal_index).remove();
 	},
