@@ -125,7 +125,7 @@ var WIDE = {
 		element2.id = "terminal"+terminal_index ;	
 		containerForTerminals.appendChild(element2);	
 
-		const socket = io("http://localhost:80");
+		let socket = io("http://localhost:80");
 		const container = document.getElementById('terminal'+terminal_index);
 		const terminal = new Terminal();
 		const fitAddon = new FitAddon();

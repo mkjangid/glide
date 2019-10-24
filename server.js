@@ -227,7 +227,7 @@ io.on('connection', function(socket){
         
         // For all shell data send it to the socket
         shell.on('data', (data) => {
-            io.emit('data',data);
+            socket.emit('data',data);
         });
         
         // For all socket data send it to the shell
