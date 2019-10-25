@@ -87,10 +87,9 @@ var WIDE = {
 	},
 
 	bringTerminalToFront : function(terminal_index){
-		document.getElementById('terminal'+terminal_index).style.display = "none";
 		for (let i=0;i<this.terminals.length;i++){
 			if (this.terminals[i]!=null && (i+1)!==terminal_index){
-				document.getElementById('terminal'+i).style.display = "none";
+				document.getElementById('terminal'+(i+1)).style.display = "none";
 			}
 		}
 		document.getElementById('terminal'+terminal_index).style.display = "block";
@@ -100,13 +99,12 @@ var WIDE = {
 		let containerForTerminals = document.querySelector("#container_terminals");
 		let terminalHeaderContainer = document.querySelector("#header_for_tabs .nav");
 		let terminal_index = this.terminals.length+1;
-		//let terminal = this.terminals[];
+
 		let element = document.createElement("li");
 		let btn_id = "btn-term"+terminal_index;
 		let close_btn_id = "btn-close-term"+terminal_index;
 		element.innerHTML = '<button type="button" id="'+btn_id+'" class="btn btn-primary btn-sm">'+ 
-			'Terminal<i class="fa fa-times" id="'+close_btn_id+'" aria-hidden="true"></i>'+
-			'</button>';
+			'Terminal &nbsp; <i class="fa fa-times" id="'+close_btn_id+'" aria-hidden="true"></i> </button>';
 		element.className = 'nav-item' ;
 		element.id = "li-term"+terminal_index;
 		terminalHeaderContainer.insertBefore(element, 
@@ -117,6 +115,7 @@ var WIDE = {
 		});
 
 		document.querySelector("#"+close_btn_id).addEventListener("click",function(e){
+			e.stopPropagation();
 			WIDE.closeTerminal(terminal_index);
 		});
 
@@ -143,12 +142,12 @@ var WIDE = {
 		    terminal.write(data);
 		});
 
-		this.terminals[terminal_index] = {"socket":socket};
+		this.terminals[terminal_index-1] = {"socket":socket};
 
 	},
 
 	closeTerminal : function(terminal_index) {
-		let socket = this.terminals [terminal_index-1]["socket"] ;
+		let socket = this.terminals[terminal_index-1]["socket"] ;
 		socket.close();
 		this.terminals[terminal_index-1] = null;
 		document.getElementById('terminal'+terminal_index).remove();

@@ -162,3 +162,12 @@ span.size { opacity: 0.5; }
 	top: 0%;
 	height: 40px;
 }
+
+.menu_button{
+	display: inline-block;
+	border: none;
+	color: #fff;
+	background-color: #343a40;
+	font-size: 14px;
+	/* width:50px; */
+}

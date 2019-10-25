@@ -4,15 +4,13 @@
   <title>GLIDE</title>
 
   <!-- Required meta tags -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   
   <script src="https://use.fontawesome.com/9ad0b37356.js"></script>
+  <!--helper to allow html includes -->
+  <script src="./js/csi.min.js"></script>
   <link rel="stylesheet" href="./assets/css/styles.css"></script>
   <link rel="stylesheet" href="./node_modules/xterm/css/xterm.css" />
 
@@ -20,16 +18,18 @@
 <body>
     <div id="loader">Loading wide editor</div>
     <div id="container">
+      <div data-include="./assets/html/titlebar.html"></div>
+      <div data-include="./assets/html/menubar.html"></div>
       <div id="top">
         <div id="main-header">
         </div>
         <div id="sidebar">
-          <div class="header">
+          <!--div class="header">
           </div>
           <div id="open-files">
           </div>
           <div id="folder-files"> 
-          </div>
+          </div-->
         </div>
         <div id="code-area">
           <div id="code-header">
@@ -44,8 +44,8 @@
           <ul class="nav nav-pills">
             <!--li class="nav-item" style="margin-right: 10px">
               <button type="button" class="btn btn-primary btn-sm">Terminal 1 
-                <i class="fa fa-times" aria-hidden="true"></i>
               </button>
+              <i class="fa fa-times" aria-hidden="true"></i>
             </li-->
             <li class="nav-item" style="margin-right: 10px">
               <i class="fa fa-plus fa-lg" id="btn-add-terminal"></i>
@@ -56,13 +56,11 @@
     </div>
 
     <div id="container_terminals">
-          <!--div class="terminal_xterm" id="terminal1"></div-->
+        <!--div class="terminal_xterm" id="terminal1"></div-->
     </div>
-
 
     <script src="./js/monaco-editor/min/vs/loader.js"></script>
     <script src="./js/bundled_code.js"></script>
-    <!--script type="text/javascript" src="./js/bundled_terminal_code.js"></script-->
 
 </body>
 </html>
