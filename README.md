@@ -4,6 +4,12 @@ GLIDE is a Web IDE based in monaco-editor, it allows to edit remote files in you
 
 Code Heavily borrowed from https://github.com/jagenjo/wide.git
 
+Please do
+
+    npm run build
+    npm run start 
+    
+
 
 ```
 
