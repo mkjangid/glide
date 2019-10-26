@@ -1055,6 +1055,9 @@ console.log("wide editor created by Javi Agenjo (@tamat) 2018");
 console.log("************************************************");
 
 },{"./terminal_module.js":2}],2:[function(require,module,exports){
+/** -----------Created by Manish Jangid------------ 
+	------------github @ mkjangid 2019-------------
+**/
 "use strict";
 
 const Terminal = require('xterm').Terminal;
@@ -1089,7 +1092,7 @@ var terminal_module = {
     let element = document.createElement("li");
     let btn_id = "btn-term" + terminal_index;
     let close_btn_id = "btn-close-term" + terminal_index;
-    element.innerHTML = '<button type="button" id="' + btn_id + '" class="btn btn-primary btn-sm">' + 'Terminal &nbsp; <i class="fa fa-times" id="' + close_btn_id + '" aria-hidden="true"></i> </button>';
+    element.innerHTML = '<button type="button" id="' + btn_id + '" >' + 'Terminal &nbsp; <i class="fa fa-times" id="' + close_btn_id + '" aria-hidden="true"></i> </button>';
     element.className = 'bottom_header_ul_li';
     element.id = "li-term" + terminal_index;
     terminalHeaderContainer.insertBefore(element, terminalHeaderContainer.children[terminalHeaderContainer.childElementCount - 1]);
@@ -1112,8 +1115,7 @@ var terminal_module = {
       terminal.loadAddon(fitAddon);
       terminal.open(container);
       fitAddon.fit();
-      /***using socket.io instead of inbuilt xterm attach addon 
-      as it is incompatible with socket.io **/
+      /** inbuilt xterm attach addon is incompatible with socket.io **/
 
       terminal.onData(function (data) {
         socket.emit('data', data);
@@ -1124,7 +1126,7 @@ var terminal_module = {
       terminal_module.terminals[terminal_index - 1] = {
         "socket": socket
       };
-    }, 1000);
+    }, 1500);
   },
   closeTerminal: function (terminal_index) {
     let socket = this.terminals[terminal_index - 1]["socket"];
