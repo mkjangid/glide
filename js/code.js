@@ -59,7 +59,7 @@ var WIDE = {
 
 		var container = document.querySelector("#sidebar .header");
 		
-		for(var i in this.buttons){
+		/*for(var i in this.buttons){
 			var b = this.buttons[i];
 			var element = document.createElement("button");
 			if(b.icon)
@@ -72,11 +72,11 @@ var WIDE = {
 			element.dataset["command"] = b.command;
 			element.addEventListener("click",function(e){ WIDE.onCommand( this.dataset["command"], true ); });
 			container.appendChild(element);
-		}
+		}*/
 
         this.console_element = document.querySelector("#console");
 
-        this.initTerminal();
+        //this.initTerminal();
 	},
 
 	initTerminal: function(){

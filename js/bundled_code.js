@@ -61,22 +61,22 @@ var WIDE = {
     };
 
     var container = document.querySelector("#sidebar .header");
+    /*for(var i in this.buttons){
+    	var b = this.buttons[i];
+    	var element = document.createElement("button");
+    	if(b.icon)
+    		element.innerHTML = '<svg class="icon"><use xlink:href="#si-'+b.icon+'"/></svg>';
+    	else
+    		element.innerHTML = b.name;
+    	if(b.className)
+    		element.className = b.className;
+    	element.setAttribute("title",b.name);
+    	element.dataset["command"] = b.command;
+    	element.addEventListener("click",function(e){ WIDE.onCommand( this.dataset["command"], true ); });
+    	container.appendChild(element);
+    }*/
 
-    for (var i in this.buttons) {
-      var b = this.buttons[i];
-      var element = document.createElement("button");
-      if (b.icon) element.innerHTML = '<svg class="icon"><use xlink:href="#si-' + b.icon + '"/></svg>';else element.innerHTML = b.name;
-      if (b.className) element.className = b.className;
-      element.setAttribute("title", b.name);
-      element.dataset["command"] = b.command;
-      element.addEventListener("click", function (e) {
-        WIDE.onCommand(this.dataset["command"], true);
-      });
-      container.appendChild(element);
-    }
-
-    this.console_element = document.querySelector("#console");
-    this.initTerminal();
+    this.console_element = document.querySelector("#console"); //this.initTerminal();
   },
   initTerminal: function () {
     document.querySelector("#btn-add-terminal").addEventListener("click", function (e) {
