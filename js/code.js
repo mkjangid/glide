@@ -1,11 +1,7 @@
 //WIDE.js Coded by Javi Agenjo (@tamat) 2018
 "use strict"
 
-const Terminal = require('xterm').Terminal
-const FitAddon = require('xterm-addon-fit').FitAddon;
-const AttachAddon  = require('xterm-addon-attach').AttachAddon 
-const io = require('socket.io-client');
-
+const terminal_module = require('./terminal_module.js');
 
 //main class
 var WIDE = {
@@ -44,7 +40,7 @@ var WIDE = {
 			document.getElementById('loader').style.display = "none";
 			WIDE.container.style.display = "";
 			WIDE.onReady();
-			WIDE.setKey('KEY');
+			//WIDE.setKey('KEY');
 		});
 
         this.editor_header = document.querySelector("#code-header");
@@ -76,83 +72,9 @@ var WIDE = {
 
         this.console_element = document.querySelector("#console");
 
-        //this.initTerminal();
+        terminal_module.initTerminal();
 	},
 
-	initTerminal: function(){
-		document.querySelector("#btn-add-terminal").addEventListener("click",function(e){
-			WIDE.addNewTerminal();
-		});
-		this.addNewTerminal();	
-	},
-
-	bringTerminalToFront : function(terminal_index){
-		for (let i=0;i<this.terminals.length;i++){
-			if (this.terminals[i]!=null && (i+1)!==terminal_index){
-				document.getElementById('terminal'+(i+1)).style.display = "none";
-			}
-		}
-		document.getElementById('terminal'+terminal_index).style.display = "block";
-	},
-
-	addNewTerminal : function() {
-		let containerForTerminals = document.querySelector("#container_terminals");
-		let terminalHeaderContainer = document.querySelector("#header_for_tabs .nav");
-		let terminal_index = this.terminals.length+1;
-
-		let element = document.createElement("li");
-		let btn_id = "btn-term"+terminal_index;
-		let close_btn_id = "btn-close-term"+terminal_index;
-		element.innerHTML = '<button type="button" id="'+btn_id+'" class="btn btn-primary btn-sm">'+ 
-			'Terminal &nbsp; <i class="fa fa-times" id="'+close_btn_id+'" aria-hidden="true"></i> </button>';
-		element.className = 'nav-item' ;
-		element.id = "li-term"+terminal_index;
-		terminalHeaderContainer.insertBefore(element, 
-			terminalHeaderContainer.children[terminalHeaderContainer.childElementCount-1]);
-
-		document.querySelector("#"+btn_id).addEventListener("click",function(e){
-			WIDE.bringTerminalToFront(terminal_index);
-		});
-
-		document.querySelector("#"+close_btn_id).addEventListener("click",function(e){
-			e.stopPropagation();
-			WIDE.closeTerminal(terminal_index);
-		});
-
-		let element2 = document.createElement("div");
-		element2.className = 'terminal_xterm'
-		element2.id = "terminal"+terminal_index ;	
-		containerForTerminals.appendChild(element2);	
-
-		let socket = io("http://localhost:80");
-		const container = document.getElementById('terminal'+terminal_index);
-		const terminal = new Terminal();
-		const fitAddon = new FitAddon();
-		terminal.loadAddon(fitAddon);
-		terminal.open(container);
-		fitAddon.fit();
-
-		/***using socket.io instead of inbuilt xterm attach addon 
-		as it is incompatible with socket.io **/
-		terminal.onData(function (data) {
-		   socket.emit('data', data);
-		});
-
-		socket.on('data', function (data) {
-		    terminal.write(data);
-		});
-
-		this.terminals[terminal_index-1] = {"socket":socket};
-
-	},
-
-	closeTerminal : function(terminal_index) {
-		let socket = this.terminals[terminal_index-1]["socket"] ;
-		socket.close();
-		this.terminals[terminal_index-1] = null;
-		document.getElementById('terminal'+terminal_index).remove();
-		document.getElementById('li-term'+terminal_index).remove();
-	},
 
     onResize: function(){
         for(var i = 0; i < this.files.length; ++i)
@@ -1245,7 +1167,10 @@ console.warn = function(){ console._warn.apply(console,arguments); };
 console.error = function(){ console._error.apply(console,arguments); };
 console.clear = function(){ console._clear(); WIDE.commands.clear(); };
 
-WIDE.init();
+document.addEventListener("DOMContentLoaded", function(event) {
+    WIDE.init();
+});
+
 console.log("wide editor created by Javi Agenjo (@tamat) 2018");
 console.log("************************************************");
 

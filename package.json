@@ -30,7 +30,7 @@
     "babelify": "^10.0.0"
   },
   "scripts": {
-    "build": "browserify ./js/code.js -t babelify --outfile ./js/bundled_code.js",
+    "build": "browserify ./js/code.js -t babelify --outfile ./js/code_bundle.js",
     "start": "sudo node server.js"
   }
 }
