@@ -18,7 +18,7 @@
     "nan": "git+https://github.com/nodejs/nan.git",
     "node-pty": "^0.8.1",
     "salted-md5": "^4.0.2",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "xterm": "^4.0.2",
     "xterm-addon-attach": "^0.3.0",
     "xterm-addon-fit": "^0.2.1",
